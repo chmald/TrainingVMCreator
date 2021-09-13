@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainingVMCreator", "TrainingVMCreator.csproj", "{62497A86-3144-4C3C-BE73-7BA6F065425C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{62497A86-3144-4C3C-BE73-7BA6F065425C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62497A86-3144-4C3C-BE73-7BA6F065425C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62497A86-3144-4C3C-BE73-7BA6F065425C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62497A86-3144-4C3C-BE73-7BA6F065425C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {45AAB2EA-9FC7-47A7-B636-4504DB6BE6FE}
+	EndGlobalSection
+EndGlobal

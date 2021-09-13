@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TrainingVMCreator": {
+      "commandName": "Project",
+      "commandLineArgs": "C://Users//chmald//my.azureauth"
+    }
+  }
+}
