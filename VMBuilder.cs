@@ -19,9 +19,9 @@ namespace TrainingVMCreator
     public class VMBuilder
     {
         private Region region = Region.USSouthCentral;
-        private KnownLinuxVirtualMachineImage linuxImage = KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts;
-        private KnownWindowsVirtualMachineImage winImage = KnownWindowsVirtualMachineImage.WindowsServer2012R2Datacenter;
-        private VirtualMachineSizeTypes vmSize = VirtualMachineSizeTypes.StandardD2V3;
+        //private KnownLinuxVirtualMachineImage linuxImage = KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts;
+        //private KnownWindowsVirtualMachineImage winImage = KnownWindowsVirtualMachineImage.WindowsServer2012R2Datacenter;
+        private VirtualMachineSizeTypes vmSize = VirtualMachineSizeTypes.StandardD2sV3;
         private string resourceGroup = $"TrainingRG_{DateTime.Now.Year.ToString()}-{DateTime.Now.Month.ToString()}-{DateTime.Now.Day.ToString()}-{DateTime.Now.Millisecond.ToString()}";
         private string vmNetwork = $"VMNetwork_{DateTime.Now.Year.ToString()}-{DateTime.Now.Month.ToString()}-{DateTime.Now.Day.ToString()}-{DateTime.Now.Millisecond.ToString()}";
         private INetwork network;
@@ -104,7 +104,7 @@ namespace TrainingVMCreator
                 .WithSubnet("vms")
                 .WithPrimaryPrivateIPAddressDynamic()
                 .WithNewPrimaryPublicIPAddress($"vmIP{vm.VMName}")
-                .WithPopularLinuxImage(linuxImage)
+                .WithLatestLinuxImage("canonical", "0001-com-ubuntu-server-focal", "20_04-lts")
                 .WithRootUsername(vm.Username)
                 .WithRootPassword(vm.Password)
                 .WithSize(vmSize)
@@ -130,7 +130,7 @@ namespace TrainingVMCreator
                 .WithSubnet("vms")
                 .WithPrimaryPrivateIPAddressDynamic()
                 .WithNewPrimaryPublicIPAddress($"vmIP{vm.VMName}")
-                .WithPopularWindowsImage(winImage)
+                .WithLatestWindowsImage("MicrosoftWindowsServer", "WindowsServer", "2019-datacenter-gensecond")
                 .WithAdminUsername(vm.Username)
                 .WithAdminPassword(vm.Password)
                 .WithSize(vmSize)
