@@ -1,15 +1,8 @@
-﻿using Microsoft.Identity.Client;
-using Microsoft.Azure.Management.Compute.Fluent;
-using Microsoft.Azure.Management.Compute.Fluent.Models;
+﻿using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
-using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.Azure.Management.Network.Fluent;
 using System.IO;
@@ -19,8 +12,8 @@ namespace TrainingVMCreator
     public class VMBuilder
     {
         private Region region = Region.USSouthCentral;
-        //private KnownLinuxVirtualMachineImage linuxImage = KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts;
-        //private KnownWindowsVirtualMachineImage winImage = KnownWindowsVirtualMachineImage.WindowsServer2012R2Datacenter;
+        private ImageInfo linuxImage = new ImageInfo() { Publisher = "canonical", Offer = "0001-com-ubuntu-server-focal", Sku = "20_04-lts" };
+        private ImageInfo windowsImage = new ImageInfo() { Publisher = "MicrosoftWindowsServer", Offer = "WindowsServer", Sku = "2019-datacenter-gensecond" };
         private VirtualMachineSizeTypes vmSize = VirtualMachineSizeTypes.StandardD2sV3;
         private string resourceGroup = $"TrainingRG_{DateTime.Now.Year.ToString()}-{DateTime.Now.Month.ToString()}-{DateTime.Now.Day.ToString()}-{DateTime.Now.Millisecond.ToString()}";
         private string vmNetwork = $"VMNetwork_{DateTime.Now.Year.ToString()}-{DateTime.Now.Month.ToString()}-{DateTime.Now.Day.ToString()}-{DateTime.Now.Millisecond.ToString()}";
@@ -104,7 +97,7 @@ namespace TrainingVMCreator
                 .WithSubnet("vms")
                 .WithPrimaryPrivateIPAddressDynamic()
                 .WithNewPrimaryPublicIPAddress($"vmIP{vm.VMName}")
-                .WithLatestLinuxImage("canonical", "0001-com-ubuntu-server-focal", "20_04-lts")
+                .WithLatestLinuxImage(linuxImage.Publisher, linuxImage.Offer, linuxImage.Sku)
                 .WithRootUsername(vm.Username)
                 .WithRootPassword(vm.Password)
                 .WithSize(vmSize)
@@ -130,7 +123,7 @@ namespace TrainingVMCreator
                 .WithSubnet("vms")
                 .WithPrimaryPrivateIPAddressDynamic()
                 .WithNewPrimaryPublicIPAddress($"vmIP{vm.VMName}")
-                .WithLatestWindowsImage("MicrosoftWindowsServer", "WindowsServer", "2019-datacenter-gensecond")
+                .WithLatestWindowsImage(windowsImage.Publisher, windowsImage.Offer, windowsImage.Sku)
                 .WithAdminUsername(vm.Username)
                 .WithAdminPassword(vm.Password)
                 .WithSize(vmSize)
