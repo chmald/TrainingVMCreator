@@ -61,12 +61,15 @@ namespace TrainingVMCreator
 
             using(StreamWriter sw = File.CreateText(@"VMData.txt"))
             {
+                vms.Reverse();
                 foreach (VMInfo info in vms)
                 {
                     Console.WriteLine("=============================");
                     sw.WriteLine("=============================");
                     Console.WriteLine($"VM for User {info.Number}");
                     sw.WriteLine($"VM for User {info.Number}");
+                    Console.WriteLine($"VM Name: {info.VMName}");
+                    sw.WriteLine($"VM Name: {info.VMName}");
                     Console.WriteLine($"IP Address: {info.IPAddress}");
                     sw.WriteLine($"IP Address: {info.IPAddress}");
                     Console.WriteLine($"User: {info.Username}");
