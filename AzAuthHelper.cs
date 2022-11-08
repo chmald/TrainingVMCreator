@@ -1,9 +1,9 @@
-﻿using Microsoft.Identity.Client;
-using Microsoft.Azure.Management.Fluent;
-using Microsoft.Azure.Management.ResourceManager.Fluent;
-using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
-using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+﻿using Azure.Core;
+using Azure.Identity;
+using Azure.ResourceManager;
+using Newtonsoft.Json;
 using System;
+using System.IO;
 
 namespace TrainingVMCreator
 {
@@ -11,30 +11,23 @@ namespace TrainingVMCreator
     {
         public AzAuthHelper() {}
 
-        public static AzureCredentials AcquireAzureCredentials(string authFile)
+        public static ClientSecretCredential AcquireAzureCredentials(string authFile)
         {
             try
             {
-                return SdkContext.AzureCredentialsFactory.FromFile(authFile);
+                var authFileContent = JsonConvert.DeserializeObject<AuthFile>(File.ReadAllText(authFile));
+                return new ClientSecretCredential(authFileContent.TenantId, authFileContent.ClientId, authFileContent.ClientSecret);
             }
-            catch(MsalServiceException ex)
+            catch(Exception ex)
             {
-                string errorCode = ex.ErrorCode;
-                throw;
-            }
-            catch (OperationCanceledException ex)
-            {
-                throw;
-            }
-            catch (MsalClientException ex)
-            {
+                string errorCode = ex.Message;
                 throw;
             }
         }
 
-        public static IAzure LogIntoAzure(AzureCredentials credentials)
+        public static ArmClient LogIntoAzure(ClientSecretCredential credentials)
         {
-            return Azure.Configure().WithLogLevel(HttpLoggingDelegatingHandler.Level.Basic).Authenticate(credentials).WithDefaultSubscription();
+            return new ArmClient(credentials);
         }
     }
 }

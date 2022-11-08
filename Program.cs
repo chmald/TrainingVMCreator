@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
-using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
+using System.Threading.Tasks;
+using Azure.Identity;
 
 namespace TrainingVMCreator
 {
@@ -114,13 +115,13 @@ namespace TrainingVMCreator
             try
             {
                 var authFile = (args.Length > 0) ? args[0] : Directory.GetParent(AppContext.BaseDirectory).FullName + "\\my.azureauth";
-                AzureCredentials credentials = AzAuthHelper.AcquireAzureCredentials(authFile);
+                ClientSecretCredential credentials = AzAuthHelper.AcquireAzureCredentials(authFile);
 
                 Console.WriteLine("Logging into Azure.");
                 var azure = AzAuthHelper.LogIntoAzure(credentials);
-                
+
                 VMBuilder vmBuilder = new VMBuilder(azure);
-                vmBuilder.BuildVMs(count, options);
+                vmBuilder.BuildVMs(count, options).Wait();
 
                 Console.WriteLine("Press any key to exit.");
                 Console.ReadKey();
